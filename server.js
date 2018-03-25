@@ -1,6 +1,6 @@
 var Connection = require('tedious').Connection;
 var config = {
-    userName: 'root',
+    userName: 'root', // Must have user created with below username and attribute
     password: 'rootPassword',
     server: 'localhost'
 };
