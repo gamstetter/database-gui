@@ -4,14 +4,24 @@
 <html>
     <head>
         <title>Add a Developer Input Form</title>
-    </head>
-    <body>
-        <HR>
-            <a href="add_dev.html">Add Dev</a>
-            <a href="add_effort.html">Add Effort</a>
-            <a href="add_item_xml.html">Add Item XML</a>
-            <a href="add_item.html">Add Item</a>
-            <a href="add_note.html">Add Note</a>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="dropdown.js"></script>
+    </HEAD>
+
+    <BODY BGCOLOR="FFFFFF">
+        <div class="nav">
+            <div class="dropdown">
+                <button class="dropbtn" onclick="dropFunc()">Add  <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content" id="myDropdown">
+                    <a href="add_dev.html">Add Dev</a>
+                    <a href="add_effort.html">Add Effort</a>
+                    <a href="add_note.html">Add Note</a>
+                    <a href="add_item.html">Add Item</a>
+                    <a href="add_item_xml.html">Add Item XML</a>
+                </div>
+            </div>
             <a href="assigned.html">Assigned</a>
             <a href="business_review.html">Business Review</a>
             <a href="configuration.html">Configuration</a>
@@ -19,10 +29,12 @@
             <a href="peer_review.html">Peer Review</a>
             <a href="pending_development.html">Pending Development</a>
             <a href="pending_review.html">Pending Review</a>
-            <a href="report_requested.html">Report Requested</a>
+            <a href="report_request.html">Report Requested</a>
             <a href="request_review.html">Request Review</a>
             <a href="update_status.html">Update Status</a>
-        <HR>
+        </div>
+        
+        <h1>Add a Developer Input Form</h1>
         <form>
             Name (text):<br>
             <input type="text" name="name"><br>
