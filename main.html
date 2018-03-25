@@ -6,9 +6,15 @@
 
     <BODY BGCOLOR="FFFFFF">
         <div class="nav">
-            <a href="add_dev.html">Add Dev</a>
-            <a href="add_effort.html">Add Effort</a>
-            <a href="add_note.html">Add Note</a>
+            <div class="dropdown">
+                <button class="dropbtn" onclick="dropFunc()">Add<i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content" id="myDropdown">
+                    <a href="add_dev.html">Add Dev</a>
+                    <a href="add_effort.html">Add Effort</a>
+                    <a href="add_note.html">Add Note</a>
+                </div>
+            </div>
             <a href="assigned.html">Assigned</a>
             <a href="business_review.html">Business Review</a>
             <a href="configuration.html">Configuration</a>
@@ -20,5 +26,22 @@
             <a href="request_review.html">Request Review</a>
             <a href="update_status.html">Update Status</a>
         </div>
+        <script>
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function dropFunc() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(e) {
+        if (!e.target.matches('.dropbtn')) {
+            var myDropdown = document.getElementById("myDropdown");
+            if (myDropdown.classList.contains('show')) {
+                myDropdown.classList.remove('show');
+            }
+        }
+        }
+        </script>
     </BODY>
 </HTML>
