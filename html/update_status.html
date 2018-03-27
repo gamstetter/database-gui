@@ -40,8 +40,16 @@
             Item ID (int):<br>
             <input type="text" name="item_id"><br>
             Next Status (text):<br>
-            <input type="text" name="next_status"><br>
-            <input type="submit" value="Submit">
+            <input type="text" name="next_status"><br><br>
+            <button onclick="hitSubmit()">Submit </button>
         </form>
+
+        <script>
+            function hitSubmit() {
+                var item_id = document.getElementsByName("item_id");
+                var next_status = document.getElementsByName("next_status");
+                alert("Input Successfully Received");
+            }
+        </script>
     </body>
 </html>

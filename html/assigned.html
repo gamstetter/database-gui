@@ -40,12 +40,17 @@
             Item ID (int):<br>
             <input type="text" name="item_id"><br>
             Assignee (text):<br>
-            <input type="text" name="assignee"><br>
-            Assigner (text):<br>
-            <input type="text" name="assigner"><br>
-            Assigned (datetime):<br>
-            <input type="text" name="assigned"><br>
-            <input type="submit" value="Submit">
+            <input type="text" name="assignee"><br><br>
+            <button onclick="hitSubmit()">Submit </button>
         </form>
+
+        <script>
+            function hitSubmit() {
+                var date = new Date();
+                var item_id = document.getElementsByName("item_id");
+                var assignee = document.getElementsByName("assignee");
+                alert("Input Successfully Received");
+            }
+        </script>
     </body>
 </html>

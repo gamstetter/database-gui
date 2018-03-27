@@ -40,8 +40,16 @@
             Item ID (int):<br>
             <input type="text" name="item_id"><br>
             Note (text):<br>
-            <input type="text" name="note"><br>
-            <input type="submit" value="Submit">
+            <input type="text" name="note"><br><br>
+            <button onclick="hitSubmit()">Submit </button>
         </form>
+
+        <script>
+            function hitSubmit() {
+                var item_id = document.getElementsByName("item_id");
+                var note = document.getElementsByName("note");
+                alert("Input Successfully Received");
+            }
+        </script>
     </body>
 </html>

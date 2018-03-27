@@ -40,8 +40,16 @@
             Request Location (text):<br>
             <input type="text" name="request_location"><br>
             XML (xml):<br>
-            <input type="text" name="xml"><br>
-            <input type="submit" value="Submit">
+            <input type="text" name="xml"><br><br>
+            <button onclick="hitSubmit()">Submit </button>
         </form>
+
+        <script>
+            function hitSubmit() {
+                var request_location = document.getElementsByName("request_location");
+                var xml = document.getElementsByName("xml");
+                alert("Input Successfully Received");
+            }
+        </script>
     </body>
 </html>

@@ -40,8 +40,16 @@
             Name (text):<br>
             <input type="text" name="name"><br>
             Manager (text):<br>
-            <input type="text" name="manager"><br>
-            <input type="submit" value="Submit">
+            <input type="text" name="manager"><br><br>
+            <button onclick="hitSubmit()">Submit </button>
         </form>
+
+        <script>
+            function hitSubmit() {
+                var name = document.getElementsByName("name");
+                var manager = document.getElementsByName("manager");
+                alert("Input Successfully Received");
+            }
+        </script>
     </body>
 </html>
