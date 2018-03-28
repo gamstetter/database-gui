@@ -43,14 +43,19 @@
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
+        <script src="/socket.io/socket.io.js"></script>
         <script>
+            var socket = io();
             function hitSubmit() {
-                var name = document.getElementsByName("name");
-                var manager = document.getElementsByName("manager");
-                var string = "insert into work.developers (id,name,manager) values (default, " + name + ", " + manager + ");";
-                alert("Input Successfully Received");
-                //executeStatement(string);
+                let name = document.getElementsByName("name");
+                let manager = document.getElementsByName("manager");
+                let query = "insert into work.developers (id,name,manager) values (default, " + name + ", " + manager + ");";
+                socket.emit('process_query', query);
             }
+
+            socket.on('query_status', function(status){
+                console.log('query status: ' + status);
+            })
         </script>
     </body>
 </html>

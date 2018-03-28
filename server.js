@@ -26,8 +26,8 @@ connection.on('connect', function(err) {
 
 io.on('connection', function(socket){
     socket.on('process_query', function(queryString){
-        let success = executeStatement(queryString)
-        socket.emit('query_success', success);
+        let success = executeStatement(queryString);
+        socket.emit('query_status', success);
     });
 });
 
@@ -36,7 +36,7 @@ function executeStatement(queryString) {
         if (err) {
             return false;
         }
-    );
+    });
 
     connection.execSql(request);
     return true;
