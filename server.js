@@ -1,4 +1,11 @@
 var Connection = require('tedious').Connection;
+var Request = require('tedious').Request;
+var TYPES = require('tedious').TYPES;
+
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 var config = {
     userName: 'root',
     password: 'rootPassword',
@@ -17,29 +24,20 @@ connection.on('connect', function(err) {
     }
 });
 
-var Request = require('tedious').Request;  
-var TYPES = require('tedious').TYPES;  
+io.on('connection', function(socket){
+    socket.on('process_query', function(queryString){
+        let success = executeStatement(queryString)
+        socket.emit('query_success', success);
+    });
+});
 
-function executeStatement() {  
-    request = new Request("SELECT * from Reporting_developer.work.statuses", function(err) {  
-    if (err) {  
-        console.log(err);}  
-    });  
-    var result = "";  
-    request.on('row', function(columns) {  
-        columns.forEach(function(column) {  
-          if (column.value === null) {  
-            console.log('NULL');  
-          } else {  
-            result+= column.value + " ";  
-          }  
-        });  
-        console.log(result);  
-        result ="";  
-    });  
+function executeStatement(queryString) {
+    let request = new Request(queryString, function(err) {
+        if (err) {
+            return false;
+        }
+    );
 
-    request.on('done', function(rowCount, more) {  
-    console.log(rowCount + ' rows returned');  
-    });  
-    connection.execSql(request);  
+    connection.execSql(request);
+    return true;
 }  
