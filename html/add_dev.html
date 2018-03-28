@@ -43,9 +43,9 @@
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
         <script>
-            var socket = io();
+            var socket = io('http://localhost');
             function hitSubmit() {
                 let name = document.getElementsByName("name");
                 let manager = document.getElementsByName("manager");
