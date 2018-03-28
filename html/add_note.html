@@ -7,9 +7,9 @@
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="dropdown.js"></script>
-    </HEAD>
+    </head>
 
-    <BODY BGCOLOR="FFFFFF">
+    <body BGCOLOR="FFFFFF">
         <div class="nav">
             <div class="dropdown">
                 <button class="dropbtn" onclick="dropFunc()">Add  <i class="fa fa-caret-down"></i>
@@ -29,17 +29,29 @@
             <a href="peer_review.html">Peer Review</a>
             <a href="pending_development.html">Pending Development</a>
             <a href="pending_review.html">Pending Review</a>
-            <a href="report_request.html">Report Requested</a>
+            <a href="report_requested.html">Report Requested</a>
             <a href="request_review.html">Request Review</a>
             <a href="update_status.html">Update Status</a>
         </div>
+        
+        <h1>Add a Note Input Form</h1>
         
         <form>
             Item ID (int):<br>
             <input type="text" name="item_id"><br>
             Note (text):<br>
-            <input type="text" name="note"><br>
-            <input type="submit" value="Submit">
+            <input type="text" name="note"><br><br>
+            <button onclick="hitSubmit()">Submit </button>
         </form>
+
+        <script>
+            function hitSubmit() {
+                var item_id = document.getElementsByName("item_id");
+                var note = document.getElementsByName("note");
+                var string = "insert into work.notes (item_id, note) values (" + item_id + ", " + note + ");";
+                alert("Input Successfully Received");
+                //executeStatement(string);
+            }
+        </script>
     </body>
 </html>

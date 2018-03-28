@@ -7,9 +7,9 @@
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="dropdown.js"></script>
-    </HEAD>
+    </head>
 
-    <BODY BGCOLOR="FFFFFF">
+    <body BGCOLOR="FFFFFF">
         <div class="nav">
             <div class="dropdown">
                 <button class="dropbtn" onclick="dropFunc()">Add  <i class="fa fa-caret-down"></i>
@@ -29,10 +29,23 @@
             <a href="peer_review.html">Peer Review</a>
             <a href="pending_development.html">Pending Development</a>
             <a href="pending_review.html">Pending Review</a>
-            <a href="report_request.html">Report Requested</a>
+            <a href="report_requested.html">Report Requested</a>
             <a href="request_review.html">Request Review</a>
             <a href="update_status.html">Update Status</a>
         </div>
+        
+        <h1>Pending Review</h1>
+
+        <script>
+            var string = "select i.id, i.name, i.requested, i.requestor, i.department " +
+            "from work.items i where " +
+                "status <> 'Closed' --Exclude items that have been closed " +
+                "and not exists ( --No request review listed for the work item " +
+                "select * " +
+                "from work.request_reviews " +
+                " where item_id = i.id ";
+            //executeStatement(string);
+        </script>
         
     </body>
 </html>

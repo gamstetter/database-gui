@@ -7,9 +7,9 @@
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="dropdown.js"></script>
-    </HEAD>
+    </head>
 
-    <BODY BGCOLOR="FFFFFF">
+    <body BGCOLOR="FFFFFF">
         <div class="nav">
             <div class="dropdown">
                 <button class="dropbtn" onclick="dropFunc()">Add  <i class="fa fa-caret-down"></i>
@@ -29,17 +29,93 @@
             <a href="peer_review.html">Peer Review</a>
             <a href="pending_development.html">Pending Development</a>
             <a href="pending_review.html">Pending Review</a>
-            <a href="report_request.html">Report Requested</a>
+            <a href="report_requested.html">Report Requested</a>
             <a href="request_review.html">Request Review</a>
             <a href="update_status.html">Update Status</a>
         </div>
+        
+        <h1>Update Status Request Input Form</h1>
         
         <form>
             Item ID (int):<br>
             <input type="text" name="item_id"><br>
             Next Status (text):<br>
-            <input type="text" name="next_status"><br>
-            <input type="submit" value="Submit">
+            <input type="text" name="next_status"><br><br>
+            <button onclick="hitSubmit()">Submit </button>
         </form>
+
+        <script>
+            function hitSubmit() {
+                var item_id = document.getElementsByName("item_id");
+                var next_status = document.getElementsByName("next_status");
+                var string =
+                    "declare" +
+                    "	@status varchar(60)," +
+                    "	@last_status_date datetime2;" +
+                    "set @status = (select [status] from work.items where id = " + item_id + ");" +
+                    " --Check validity of status change" +
+                    "   if not exists (select * from work.status_precedence where status = @status and next_status = " + next_status + ")" +
+                    "   begin" +
+                    "       declare @err varchar(255) = 'Changes not applied: ' + " + next_status + " + ' is not a valid state following ' + @status + '.  See work.status_precedence for valid status advancements.';" +
+                    "       raiserror(@err,0,-1);" +
+                    "       return -1;" +
+                    "   end" +
+                    "   --Get date time of last status update" +
+                    "   set @last_status_date = isnull(" +
+                    "     (	select max(added)" +
+                    "       from work.status_changes" +
+                    "       where item_id = " + item_id +
+                    "      )," +
+                    "     (	select requested" +
+                    "       from work.items" +
+                    "       where id = " + item_id +
+                    "      ));" +
+                    "   --If request has not been reviewed." +
+                    "   if @status = 'Pending Review' and not exists (select * from work.request_reviews where item_id = " + item_id + " and approval = 1 and reviewed > @last_status_date)" +
+                    "   begin" +
+                    "       raiserror(N'Changes not applied: Request has not been reviewed since set to pending status.',0,-1);" +
+                    "       return -1;" +
+                    "   end" +
+                    "   --If developer has not been assigned." +
+                    "   if @status = 'Request Reviewed' and not exists (select * from work.assignments where item_id = " + item_id + " and assigned > @last_status_date)" +
+                    "   begin" +
+                    "       raiserror(N'Changes not applied: Developer has not been assigned.',0,-1);" +
+                    "       return -1;" +
+                    "   end" +
+                    "   --If level of effort is not assigned." +
+                    "   if @status = 'Assigned' and not exists (select * from work.developer_review where item_id = " + item_id + " and added > @last_status_date)" +
+                    "   begin" +
+                    "       raiserror(N'Changes not applied: Level of effort has not been assigned.',0,-1);" +
+                    "       return -1;" +
+                    "   end" +
+                    "   --If work hasn't been peer reviewed." +
+                    "   if @status = 'Peer Review' and " + next_status + " = 'Business Review' and not exists (select * from work.peer_reviews where item_id = " + item_id + " and approval = 1 and reviewed > @last_status_date)" +
+                    "   begin" +
+                    "       raiserror(N'Changes not applied: No approved peer review after work item last set to Peer Review status.',0,-1);" +
+                    "       return -1;" +
+                    "   end" +
+                    "   --If work hasn't completed business review.' +" +
+                    "   if @status = 'Business Review' and " + next_status + " = 'Complete' and not exists (select * from work.business_reviews where item_id = " + item_id + " and approval = 1 and reviewed > @last_status_date)" +
+                    "   begin" +
+                    "       raiserror(N'Changes not applied: No approved business review after work item last set to Business Review status.',0,-1);" +
+                    "       return -1;" +
+                    "   end" +
+                    "   --Log status." +
+                    "   insert into work.status_changes (" +
+                    "       item_id," +
+                    "       previous_status," +
+                    "       new_status" +
+                    "   ) values (" +
+                    "		" + item_id + "," +
+                    "		@status," +
+                    "		" + next_status +
+                    "    );" +
+                    "   --Set current status." +
+                    "   update work.items set status = " + next_status +
+                    "   where id = " + item_id + ";";
+                alert("Input Successfully Received");
+                //executeStatement(string);
+            }
+        </script>
     </body>
 </html>
