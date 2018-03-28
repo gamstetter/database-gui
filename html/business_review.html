@@ -55,7 +55,11 @@
             var approval = document.getElementsByName("approval");
             var reviewer = document.getElementsByName("reviewer");
             var comment = document.getElementsByName("comment");
+            var string = "insert into work.business_reviews (item_id,approval,reviewer,comment,reviewed) values (" +
+                    item_id + ", " + approval + ", " + reviewer + ", " + comment + ", " + date + ");";
             alert("Input Successfully Received");
+            //executeStatement(string);
+
         }
         </script>
     </body>

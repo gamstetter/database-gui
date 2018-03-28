@@ -61,9 +61,14 @@
                 var requester = document.getElementsByName("requester");
                 var department = document.getElementsByName("department");
                 var priority = document.getElementsByName("priority");
+                var purpose = document.getElementsByName("purpose");
                 var requirements = document.getElementsByName("requirements");
                 var type = document.getElementsByName("type");
+                var string = "insert into work.items (name, requested, requestor, department, priority, purpose, " +
+                    "requirements, type, request_location) " + "values (" + name + ", " + date + ", " + requester +
+                    ", " + department + ", " + priority + ", " + purpose + ", " + requirements + ", " + type + ", 'Internal');";
                 alert("Input Successfully Received");
+                //executeStatement(string);
             }
         </script>
     </body>

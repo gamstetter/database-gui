@@ -32,7 +32,7 @@
             <a href="report_requested.html">Report Requested</a>
             <a href="request_review.html">Request Review</a>
             <a href="update_status.html">Update Status</a>
-        <HR>
+        </div>
         <h1>Add a Developer Input Form</h1>
         
         <form>
@@ -47,7 +47,9 @@
             function hitSubmit() {
                 var name = document.getElementsByName("name");
                 var manager = document.getElementsByName("manager");
+                var string = "insert into work.developers (id,name,manager) values (default, " + name + ", " + manager + ");";
                 alert("Input Successfully Received");
+                //executeStatement(string);
             }
         </script>
     </body>

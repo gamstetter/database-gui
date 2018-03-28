@@ -50,10 +50,12 @@
             function hitSubmit() {
                 var date = new Date();
                 var item_id = document.getElementsByName("item_id");
-                var approval = document.getElementsByName("approval");
-                var reviewer = document.getElementsByName("reviewer");
-                var comment = document.getElementsByName("comment");
+                var estimate = document.getElementsByName("estimate");
+                var developer = document.getElementsByName("developer");
+                var string = "insert into work.level_of_effort (item_id,estimate,added,developer) " +
+                    "values (" + item_id + ", " + estimate + ", " + date + ", " + developer + ");";
                 alert("Input Successfully Received");
+                //executeStatement(string);
             }
         </script>
     </body>

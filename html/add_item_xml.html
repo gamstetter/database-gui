@@ -48,8 +48,63 @@
             function hitSubmit() {
                 var request_location = document.getElementsByName("request_location");
                 var xml = document.getElementsByName("xml");
+                var string = "insert into work.items (" +
+                    "                    name," +
+                    "                    requested," +
+                    "                    requestor," +
+                    "                    department," +
+                    "                    priority," +
+                    "                    purpose," +
+                    "                   requirements," +
+                    "                                            type," +
+                    "                    request_location" +
+                    "                )" +
+                    "                values (" +
+                    "                    convert(varchar(256),@xml.query(" +
+                    "                    'declare namespace my=\"http://schemas.microsoft.com/office/infopath/2003/myXSD/2013-11-06T01:49:08\";" +
+                    "                        for $RequestName in /my:myFields/my:RequestName" +
+                    "                return string($RequestName)'" +
+                    "            ))," +
+                    "                convert(datetime2,convert(varchar(256),@xml.query(" +
+                    "                    'declare namespace my=\"http://schemas.microsoft.com/office/infopath/2003/myXSD/2013-11-06T01:49:08\";" +
+                    "                        for $Requested in /my:myFields/my:Requested" +
+                    "                return string($Requested)'" +
+                    "            )))," +
+                    "                convert(varchar(256),@xml.query(" +
+                    "                    'declare namespace my=\"http://schemas.microsoft.com/office/infopath/2003/myXSD/2013-11-06T01:49:08\";" +
+                    "                        for $Requestor in /my:myFields/my:Requestor" +
+                    "                return string($Requestor)'" +
+                    "            ))," +
+                    "                convert(varchar(256),@xml.query(" +
+                    "                    'declare namespace my=\"http://schemas.microsoft.com/office/infopath/2003/myXSD/2013-11-06T01:49:08\";" +
+                    "                        for $Department in /my:myFields/my:Department" +
+                    "                return string($Department)'" +
+                    "            ))," +
+                    "                convert(varchar(30),@xml.query(" +
+                    "                    'declare namespace my=\"http://schemas.microsoft.com/office/infopath/2003/myXSD/2013-11-06T01:49:08\";" +
+                    "                        for $Priority in /my:myFields/my:Priority" +
+                    "                return string($Priority)'" +
+                    "            ))," +
+                    "                convert(varchar(max),@xml.query(" +
+                    "                    'declare namespace my=\"http://schemas.microsoft.com/office/infopath/2003/myXSD/2013-11-06T01:49:08\";" +
+                    "                        for $Purpose in /my:myFields/my:Purpose" +
+                    "                return string($Purpose)'" +
+                    "            ))," +
+                    "                convert(varchar(max),@xml.query(" +
+                    "                    'declare namespace my=\"http://schemas.microsoft.com/office/infopath/2003/myXSD/2013-11-06T01:49:08\";" +
+                    "                        for $Requirements in /my:myFields/my:Requirements" +
+                    "                return string($Requirements)'" +
+                    "            ))," +
+                    "                convert(varchar(60),@xml.query(" +
+                    "                    'declare namespace my=\"http://schemas.microsoft.com/office/infopath/2003/myXSD/2013-11-06T01:49:08\";" +
+                    "                        for $Type in /my:myFields/my:Type" +
+                    "                return string($Type)'" +
+                    "            ))," +
+                    "            @request_location" +
+                    "            );";
                 alert("Input Successfully Received");
             }
+            //executeStatement(string)
         </script>
     </body>
 </html>

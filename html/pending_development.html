@@ -34,7 +34,13 @@
             <a href="update_status.html">Update Status</a>
         </div>
         
-        <h1>Pending Development Input Form</h1>
+        <h1>Pending Development</h1>
+
+        <script>
+            var string = "select id, name, requestor, department, status, request_location " +
+            "from work.items i where i.status not in ('Complete','Closed')";
+            //executeStatement(string);
+        </script>
         
     </body>
 </html>
