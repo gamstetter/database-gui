@@ -1,5 +1,6 @@
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
+var TYPES = require('tedious').TYPES;
 
 var express = require('express');
 var app = require('express')();
@@ -18,14 +19,13 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
     socket.on('process_query', function(queryString){
-        let connection = makeConnection();
-        let success = executeStatement(queryString, connection);
+        makeConnection(queryString);
         socket.emit('query_status', success);
     });
 });
 
 
-function makeConnection(){
+function makeConnection(query){
     var config = {
         userName: 'root',
         password: 'rootPassword',
@@ -35,26 +35,25 @@ function makeConnection(){
     var connection = new Connection(config);
     connection.on('connect', function(err) {
         // If no error, then good to proceed.
-        if(!err){
-            console.log("Connected");
-            executeStatement();
-            console.log("Statement compelete");
-        } else {
-            console.log(JSON.stringify(err));
-        }
-    });
+        console.log('Connected!');
+        console.log('Query started');
+        request = new Request(query, function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
 
-    return connection;
+        request.on('done', function(rowCount, more) {
+            if (rowCount === 1){
+                socket.emit('query_status', true);
+            } else if (rowCount === 0){
+                socket.emit('query_status', false);
+            }
+            console.log('Query finished');
+        });
+    });
 }
 
-function executeStatement(queryString, connection) {
-    let request = new Request(queryString, function(err) {
-        if (err) {
-            return false;
-        }
-    });
 
-    connection.execSql(request);
-    return true;
 }
 
