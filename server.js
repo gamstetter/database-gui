@@ -1,34 +1,21 @@
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
-var TYPES = require('tedious').TYPES;
 
-
-var app = require('http').createServer(handler);
-var io = require('socket.io')(app);
-var fs = require('fs');
+var app = require('express')();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 const PORT = 8080;
 
+server.listen(PORT);
 
-app.listen(PORT, function(){
-    console.log("Listening on port: " + PORT);
+app.get('/', function(req, res){
+    res.sendFile(__dirname + '/main.html');
 });
-
-function handler (req, res) {
-    fs.readFile(__dirname + '/html/main.html',
-    function (err, data) {
-        if (err) {
-            res.writeHead(500);
-            return res.end('Error loading index.html');
-        }
-
-        res.writeHead(200);
-        res.end(data);
-    });
-}
 
 io.on('connection', function(socket){
     socket.on('process_query', function(queryString){
+        makeConnection();
         let success = executeStatement(queryString);
         socket.emit('query_status', success);
     });
