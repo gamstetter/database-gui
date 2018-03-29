@@ -1,15 +1,12 @@
-<!-- Rubric "Add a developer input form" SP "add_developer" -->
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Add a Developer Input Form</title>
+<HTML>
+    <HEAD>
+        <TITLE>Reporting Developer Database</TITLE>
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="dropdown.js"></script>
-    </head>
+    </HEAD>
 
-    <body BGCOLOR="FFFFFF">
+    <BODY BGCOLOR="FFFFFF">
         <div class="nav">
             <div class="dropdown">
                 <button class="dropbtn" onclick="dropFunc()">Add  <i class="fa fa-caret-down"></i>
@@ -29,33 +26,9 @@
             <a href="peer_review.html">Peer Review</a>
             <a href="pending_development.html">Pending Development</a>
             <a href="pending_review.html">Pending Review</a>
-            <a href="report_requested.html">Report Requested</a>
+            <a href="report_request.html">Report Requested</a>
             <a href="request_review.html">Request Review</a>
             <a href="update_status.html">Update Status</a>
         </div>
-        <h1>Add a Developer Input Form</h1>
-        
-        <form>
-            Name (text):<br>
-            <input type="text" name="name" maxlength="128"><br>
-            Manager (text):<br>
-            <input type="text" name="manager"><br><br>
-            <button onclick="hitSubmit()">Submit </button>
-        </form>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-        <script>
-            var socket = io();
-            function hitSubmit() {
-                let name = document.getElementsByName("name");
-                let manager = document.getElementsByName("manager");
-                let query = "insert into work.developers (id,name,manager) values (default, " + name + ", " + manager + ");";
-                socket.emit('process_query', query);
-            }
-
-            socket.on('query_status', function(status){
-                console.log('query status: ' + status);
-            })
-        </script>
-    </body>
-</html>
+    </BODY>
+</HTML>
