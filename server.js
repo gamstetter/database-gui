@@ -19,14 +19,13 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
     socket.on('process_query', function(queryString){
-        let connection = makeConnection();
-        let success = executeStatement(queryString, connection);
+        makeConnection(queryString);
         socket.emit('query_status', success);
     });
 });
 
 
-function makeConnection(){
+function makeConnection(query){
     var config = {
         userName: 'root',
         password: 'rootPassword',
@@ -37,26 +36,24 @@ function makeConnection(){
     connection.on('connect', function(err) {
         // If no error, then good to proceed.
         console.log('Connected!');
-    });
+        console.log('Query started');
+        request = new Request(query, function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
 
-    return connection;
+        request.on('done', function(rowCount, more) {
+            if (rowCount === 1){
+                socket.emit('query_status', true);
+            } else if (rowCount === 0){
+                socket.emit('query_status', false);
+            }
+            console.log('Query finished');
+        });
+    });
 }
 
-function executeStatement(connection, query) {
-    console.log('Query started');
-    request = new Request(query, function (err) {
-        if (err) {
-            console.log(err);
-        }
-    });
 
-    request.on('done', function(rowCount, more) {
-        if (rowCount === 1){
-            socket.emit('query_status', true);
-        } else if (rowCount === 0){
-            socket.emit('query_status', false);
-        }
-        console.log('Query finished');
-    });
 }
 
