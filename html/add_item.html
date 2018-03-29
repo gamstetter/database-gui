@@ -65,8 +65,8 @@
                 var requirements = document.getElementsByName("requirements");
                 var type = document.getElementsByName("type");
                 var string = "insert into work.items (name, requested, requestor, department, priority, purpose, " +
-                    "requirements, type, request_location) " + "values (" + name + ", " + date + ", " + requester +
-                    ", " + department + ", " + priority + ", " + purpose + ", " + requirements + ", " + type + ", 'Internal');";
+                    "requirements, type, request_location) " + "values ('" + name + "', '" + date + "', '" + requester +
+                    "', '" + department + "', '" + priority + "', '" + purpose + "', '" + requirements + "', '" + type + "', 'Internal');";
                 alert("Input Successfully Received");
                 //executeStatement(string);
             }

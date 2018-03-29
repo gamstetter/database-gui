@@ -53,7 +53,7 @@
                 var estimate = document.getElementsByName("estimate");
                 var developer = document.getElementsByName("developer");
                 var string = "insert into work.level_of_effort (item_id,estimate,added,developer) " +
-                    "values (" + item_id + ", " + estimate + ", " + date + ", " + developer + ");";
+                    "values ('" + item_id + "', '" + estimate + "', '" + date + "', '" + developer + "');";
                 alert("Input Successfully Received");
                 //executeStatement(string);
             }

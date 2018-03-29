@@ -52,8 +52,8 @@
                 var item_id = document.getElementsByName("item_id");
                 var approval = document.getElementsByName("approval");
                 var comment = document.getElementsByName("comment");
-                var string = "insert into work.peer_reviews (item_id,approval,comment,reviewed,reviewer) values (" +
-                        item_id + ", " + approval + ", " + comment + ", " + date + ", system_user);";
+                var string = "insert into work.peer_reviews (item_id,approval,comment,reviewed,reviewer) values ('" +
+                        item_id + "', '" + approval + "', '" + comment + "', '" + date + "', system_user);";
                 alert("Input Successfully Received");
                 //executeStatement(string);
             }
