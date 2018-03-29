@@ -34,7 +34,18 @@
             <a href="update_status.html">Update Status</a>
         </div>
         
-        <h1>Pending Review Input Form</h1>
+        <h1>Pending Review</h1>
+
+        <script>
+            var string = "select i.id, i.name, i.requested, i.requestor, i.department " +
+            "from work.items i where " +
+                "status <> 'Closed' --Exclude items that have been closed " +
+                "and not exists ( --No request review listed for the work item " +
+                "select * " +
+                "from work.request_reviews " +
+                " where item_id = i.id ";
+            //executeStatement(string);
+        </script>
         
     </body>
 </html>

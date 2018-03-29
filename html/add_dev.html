@@ -33,15 +33,29 @@
             <a href="request_review.html">Request Review</a>
             <a href="update_status.html">Update Status</a>
         </div>
-        
         <h1>Add a Developer Input Form</h1>
         
         <form>
             Name (text):<br>
             <input type="text" name="name" maxlength="128"><br>
             Manager (text):<br>
-            <input type="text" name="manager" maxlength="100"><br>
-            <input type="submit" value="Submit">
+            <input type="text" name="manager"><br><br>
+            <button onclick="hitSubmit()">Submit </button>
         </form>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+        <script>
+            var socket = io('http://localhost');
+            function hitSubmit() {
+                let name = document.getElementsByName("name");
+                let manager = document.getElementsByName("manager");
+                let query = "insert into work.developers (id,name,manager) values (default, " + name + ", " + manager + ");";
+                socket.emit('process_query', query);
+            }
+
+            socket.on('query_status', function(status){
+                console.log('query status: ' + status);
+            })
+        </script>
     </body>
 </html>

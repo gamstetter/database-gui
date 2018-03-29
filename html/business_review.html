@@ -44,8 +44,23 @@
             Reviewer (text):<br>
             <input type="text" name="reviewer" maxlength="60"><br>
             Comment (text):<br>
-            <input type="text" name="comment"><br>
-            <input type="submit" value="Submit">
+            <input type="text" name="comment" style="height:100px;width:500px"><br><br>
+            <button onclick="hitSubmit()">Submit </button>
         </form>
+
+        <script>
+        function hitSubmit() {
+            var date = new Date();
+            var item_id = document.getElementsByName("item_id");
+            var approval = document.getElementsByName("approval");
+            var reviewer = document.getElementsByName("reviewer");
+            var comment = document.getElementsByName("comment");
+            var string = "insert into work.business_reviews (item_id,approval,reviewer,comment,reviewed) values (" +
+                    item_id + ", " + approval + ", " + reviewer + ", " + comment + ", " + date + ");";
+            alert("Input Successfully Received");
+            //executeStatement(string);
+
+        }
+        </script>
     </body>
 </html>
