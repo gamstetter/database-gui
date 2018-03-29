@@ -56,12 +56,12 @@
                 var est_delivery = document.getElementsByName("est_delivery");
 
                 var comment = document.getElementsByName("comment");
-                var string = "inset into work.developer_review (item_id,estimate,comment,reviewer,added,est_delivery) values " +
-                        item_id + ", " + estimate + ", " + comment + ", system_user, " + date +
+                var string = "inset into work.developer_review (item_id,estimate,comment,reviewer,added,est_delivery) values '" +
+                        item_id + "', '" + estimate + "', '" + comment + "', system_user, '" + date +
                         ",isnull(case " +
-                            "when " + est_delivery + " = '' then null " +
-                            "when " + est_delivery + " < CONVERT(date,getdate()) then null " +
-                            "else " + est_delivery + " " +
+                            "when '" + est_delivery + "' = '' then null " +
+                            "when '" + est_delivery + "' < CONVERT(date,getdate()) then null " +
+                            "else '" + est_delivery + "' " +
                             "end, convert(date,GETDATE()+14)));";
                 alert("Input Successfully Received");
                 //executeStatement(string);
