@@ -20,7 +20,6 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
     socket.on('process_query', function(queryString){
         makeConnection(queryString);
-        socket.emit('query_status', success);
     });
 });
 
@@ -52,8 +51,5 @@ function makeConnection(query){
             console.log('Query finished');
         });
     });
-}
-
-
 }
 
