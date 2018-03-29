@@ -50,7 +50,7 @@
                 let date = Date.now();
                 let name = document.getElementsByName("name");
                 let manager = document.getElementsByName("manager");
-                let query = "insert into work.developers (id,name,manager) values ('" + date.toString() + "', '" + name + ", '" + manager + "');";
+                let query = "insert into work.developers (id,name,manager) values ('" + date.toString() + "', '" + name + "', '" + manager + "');";
                 socket.emit('process_query', query);
             }
 
