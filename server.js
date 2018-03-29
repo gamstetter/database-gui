@@ -36,19 +36,14 @@ function makeConnection(){
     var connection = new Connection(config);
     connection.on('connect', function(err) {
         // If no error, then good to proceed.
-        if(!err){
-            console.log("Connected");
-            executeStatement();
-            console.log("Statement compelete");
-        } else {
-            console.log(JSON.stringify(err));
-        }
+        console.log('Connected!');
     });
 
     return connection;
 }
 
 function executeStatement(connection, query) {
+    console.log('Query started');
     request = new Request(query, function (err) {
         if (err) {
             console.log(err);
@@ -61,6 +56,7 @@ function executeStatement(connection, query) {
         } else if (rowCount === 0){
             socket.emit('query_status', false);
         }
+        console.log('Query finished');
     });
 }
 
