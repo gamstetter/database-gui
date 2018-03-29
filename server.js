@@ -1,5 +1,6 @@
 var Connection = require('tedious').Connection;
 var Request = require('tedious').Request;
+var TYPES = require('tedious').TYPES;
 
 var express = require('express');
 var app = require('express')();
@@ -47,14 +48,19 @@ function makeConnection(){
     return connection;
 }
 
-function executeStatement(queryString, connection) {
-    let request = new Request(queryString, function(err) {
+function executeStatement(connection, query) {
+    request = new Request(query, function (err) {
         if (err) {
-            return false;
+            console.log(err);
         }
     });
 
-    connection.execSql(request);
-    return true;
+    request.on('done', function(rowCount, more) {
+        if (rowCount === 1){
+            socket.emit('query_status', true);
+        } else if (rowCount === 0){
+            socket.emit('query_status', false);
+        }
+    });
 }
 
