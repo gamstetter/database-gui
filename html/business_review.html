@@ -38,28 +38,25 @@
         
         <form>
             Item ID (int):<br>
-            <input type="text" name="item_id"><br>
+            <input type="text" id="item_id"><br>
             Approval (bit):<br>
-            <input type="text" name="approval"><br>
+            <input type="text" id="approval"><br>
             Reviewer (text):<br>
-            <input type="text" name="reviewer" maxlength="60"><br>
+            <input type="text" id="reviewer" maxlength="60"><br>
             Comment (text):<br>
-            <textarea name="comment" rows='5' cols='45'></textarea><br>
+            <textarea id="comment" rows='5' cols='45'></textarea><br>
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
         <script>
         function hitSubmit() {
-            var date = new Date();
-            var item_id = document.getElementsByName("item_id");
-            var approval = document.getElementsByName("approval");
-            var reviewer = document.getElementsByName("reviewer");
-            var comment = document.getElementsByName("comment");
-            var string = "insert into work.business_reviews (item_id,approval,reviewer,comment,reviewed) values ('" +
+            let date = new Date();
+            let item_id = document.getElementById("item_id").value;
+            let approval = document.getElementById("approval").value;
+            let reviewer = document.getElementById("reviewer").value;
+            let comment = document.getElementById("comment").value;
+            let query = "use Reporting_developer; insert into work.business_reviews (item_id,approval,reviewer,comment,reviewed) values ('" +
                     item_id + "', '" + approval + "', '" + reviewer + "', '" + comment + "', '" + date + "');";
-            alert("Input Successfully Received");
-            //executeStatement(string);
-
         }
         </script>
     </body>

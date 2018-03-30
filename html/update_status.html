@@ -38,18 +38,18 @@
         
         <form>
             Item ID (int):<br>
-            <input type="text" name="item_id"><br>
+            <input type="text" id="item_id"><br>
             Next Status (text):<br>
-            <input type="text" name="next_status"><br><br>
+            <input type="text" id="next_status"><br><br>
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
         <script>
             function hitSubmit() {
-                var item_id = document.getElementsByName("item_id");
-                var next_status = document.getElementsByName("next_status");
-                var string =
-                    "declare" +
+                let item_id = document.getElementById("item_id").value;
+                let next_status = document.getElementById("next_status").value;
+                let query =
+                    "use Reporting_developer; declare" +
                     "	@status varchar(60)," +
                     "	@last_status_date datetime2;" +
                     "set @status = (select [status] from work.items where id = '" + item_id + "');" +
@@ -113,8 +113,6 @@
                     "   --Set current status." +
                     "   update work.items set status = '" + next_status +
                     "'   where id = '" + item_id + "';";
-                alert("Input Successfully Received");
-                //executeStatement(string);
             }
         </script>
     </body>

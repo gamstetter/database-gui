@@ -38,37 +38,35 @@
         
         <form>
             Name (text):<br>
-            <input type="text" name="name" maxlength="256"><br>
+            <input type="text" id="name" maxlength="256"><br>
             Requester (text):<br>
-            <input type="text" name="requester" maxlength="255"><br>
+            <input type="text" id="requester" maxlength="255"><br>
             Department (text):<br>
-            <input type="text" name="department" maxlength="255"><br>
+            <input type="text" id="department" maxlength="255"><br>
             Priority (text):<br>
-            <input type="text" name="priority" maxlength="30"><br>
+            <input type="text" id="priority" maxlength="30"><br>
             Purpose (text):<br>
-            <input type="text" name="purpose"><br>
+            <input type="text" id="purpose"><br>
             Requirements (text):<br>
-            <input type="text" name="requirements"><br>
+            <input type="text" id="requirements"><br>
             Type (text):<br>
-            <input type="text" name="type"><br><br>
+            <input type="text" id="type"><br><br>
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
         <script>
             function hitSubmit() {
-                var date = new Date();
-                var name = document.getElementsByName("name");
-                var requester = document.getElementsByName("requester");
-                var department = document.getElementsByName("department");
-                var priority = document.getElementsByName("priority");
-                var purpose = document.getElementsByName("purpose");
-                var requirements = document.getElementsByName("requirements");
-                var type = document.getElementsByName("type");
-                var string = "insert into work.items (name, requested, requestor, department, priority, purpose, " +
+                let date = new Date();
+                let name = document.getElementById("name").value;
+                let requester = document.getElementById("requester").value;
+                let department = document.getElementById("department").value;
+                let priority = document.getElementById("priority").value;
+                let purpose = document.getElementById("purpose").value;
+                let requirements = document.getElementById("requirements").value;
+                let type = document.getElementById("type").value;
+                let query = "use Reporting_developer; insert into work.items (name, requested, requestor, department, priority, purpose, " +
                     "requirements, type, request_location) " + "values ('" + name + "', '" + date + "', '" + requester +
                     "', '" + department + "', '" + priority + "', '" + purpose + "', '" + requirements + "', '" + type + "', 'Internal');";
-                alert("Input Successfully Received");
-                //executeStatement(string);
             }
         </script>
     </body>

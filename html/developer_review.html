@@ -38,34 +38,30 @@
         
         <form>
             Item ID (int):<br>
-            <input type="text" name="item_id"><br>
+            <input type="text" id="item_id"><br>
             Estimate (int):<br>
-            <input type="text" name="estimate"><br>
+            <input type="text" id="estimate"><br>
             Estimated Delivery (date):<br>
-            <input type="text" name="estimated delivery"><br>
+            <input type="text" id="estimated delivery"><br>
             Comment (text):<br>
-            <textarea name="comment" rows='5' cols='45'></textarea><br>
+            <textarea id="comment" rows='5' cols='45'></textarea><br>
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
         <script>
             function hitSubmit() {
-                var date = new Date();
-                var item_id = document.getElementsByName("item_id");
-                var estimate = document.getElementsByName("estimate");
-                var est_delivery = document.getElementsByName("est_delivery");
-
-                var comment = document.getElementsByName("comment");
-                var string = "inset into work.developer_review (item_id,estimate,comment,reviewer,added,est_delivery) values '" +
+                let date = new Date();
+                let item_id = document.getElementById("item_id").value;
+                let estimate = document.getElementById("estimate").value;
+                let est_delivery = document.getElementById("est_delivery").value;
+                let comment = document.getElementById("comment").value;
+                let query = "use Reporting_developer; insert into work.developer_review (item_id,estimate,comment,reviewer,added,est_delivery) values '" +
                         item_id + "', '" + estimate + "', '" + comment + "', system_user, '" + date +
                         ",isnull(case " +
                             "when '" + est_delivery + "' = '' then null " +
                             "when '" + est_delivery + "' < CONVERT(date,getdate()) then null " +
                             "else '" + est_delivery + "' " +
                             "end, convert(date,GETDATE()+14)));";
-                alert("Input Successfully Received");
-                //executeStatement(string);
-
             }
         </script>
     </body>

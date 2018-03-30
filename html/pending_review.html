@@ -37,14 +37,13 @@
         <h1>Pending Review</h1>
 
         <script>
-            var string = "select i.id, i.name, i.requested, i.requestor, i.department " +
+            let query = "use Reporting_developer; select i.id, i.name, i.requested, i.requestor, i.department " +
             "from work.items i where " +
                 "status <> 'Closed' --Exclude items that have been closed " +
                 "and not exists ( --No request review listed for the work item " +
                 "select * " +
                 "from work.request_reviews " +
                 " where item_id = i.id ";
-            //executeStatement(string);
         </script>
         
     </body>

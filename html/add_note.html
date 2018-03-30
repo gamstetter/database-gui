@@ -38,19 +38,17 @@
         
         <form>
             Item ID (int):<br>
-            <input type="text" name="item_id"><br>
+            <input type="text" id="item_id"><br>
             Note (text):<br>
-            <textarea name="note" rows='5' cols='45'></textarea><br>
+            <textarea id="note" rows='5' cols='45'></textarea><br>
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
         <script>
             function hitSubmit() {
-                var item_id = document.getElementsByName("item_id");
-                var note = document.getElementsByName("note");
-                var string = "insert into work.notes (item_id, note) values ('" + item_id + "', '" + note + "');";
-                alert("Input Successfully Received");
-                //executeStatement(string);
+                let item_id = document.getElementById("item_id").value;
+                let note = document.getElementById("note").value;
+                let query = "use Reporting_developer; insert into work.notes (item_id, note) values ('" + item_id + "', '" + note + "');";
             }
         </script>
     </body>

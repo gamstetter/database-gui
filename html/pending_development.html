@@ -37,9 +37,8 @@
         <h1>Pending Development</h1>
 
         <script>
-            var string = "select id, name, requestor, department, status, request_location " +
+            let query = "use Reporting_developer; select id, name, requestor, department, status, request_location " +
             "from work.items i where i.status not in ('Complete','Closed')";
-            //executeStatement(string);
         </script>
         
     </body>

@@ -38,24 +38,22 @@
         
         <form>
             Item ID (int):<br>
-            <input type="text" name="item_id"><br>
+            <input type="text" id="item_id"><br>
             Estimate (int):<br>
-            <input type="text" name="estimate"><br>
+            <input type="text" id="estimate"><br>
             Developer (text):<br>
-            <input type="text" name="developer"><br>
+            <input type="text" id="developer"><br>
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
         <script>
             function hitSubmit() {
-                var date = new Date();
-                var item_id = document.getElementsByName("item_id");
-                var estimate = document.getElementsByName("estimate");
-                var developer = document.getElementsByName("developer");
-                var string = "insert into work.level_of_effort (item_id,estimate,added,developer) " +
+                let date = new Date();
+                let item_id = document.getElementById("item_id").value;
+                let estimate = document.getElementById("estimate").value;
+                let developer = document.getElementById("developer").value;
+                let query = "use Reporting_developer; insert into work.level_of_effort (item_id,estimate,added,developer) " +
                     "values ('" + item_id + "', '" + estimate + "', '" + date + "', '" + developer + "');";
-                alert("Input Successfully Received");
-                //executeStatement(string);
             }
         </script>
     </body>

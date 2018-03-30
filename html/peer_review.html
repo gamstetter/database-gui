@@ -38,24 +38,22 @@
         
         <form>
             Item ID (int):<br>
-            <input type="text" name="item_id"><br>
+            <input type="text" id="item_id"><br>
             Approval (bit):<br>
-            <input type="text" name="approval"><br>
+            <input type="text" id="approval"><br>
             Comment (text):<br>
-            <textarea name="comment" rows='5' cols='45'></textarea><br>
+            <textarea id="comment" rows='5' cols='45'></textarea><br>
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
         <script>
             function hitSubmit() {
-                var date = new Date();
-                var item_id = document.getElementsByName("item_id");
-                var approval = document.getElementsByName("approval");
-                var comment = document.getElementsByName("comment");
-                var string = "insert into work.peer_reviews (item_id,approval,comment,reviewed,reviewer) values ('" +
+                let date = new Date();
+                let item_id = document.getElementById("item_id").value;
+                let approval = document.getElementById("approval").value;
+                let comment = document.getElementById("comment").value;
+                let query = "use Reporting_developer; insert into work.peer_reviews (item_id,approval,comment,reviewed,reviewer) values ('" +
                         item_id + "', '" + approval + "', '" + comment + "', '" + date + "', system_user);";
-                alert("Input Successfully Received");
-                //executeStatement(string);
             }
         </script>
     </body>

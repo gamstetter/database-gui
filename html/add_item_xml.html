@@ -38,17 +38,17 @@
         
         <form>
             Request Location (text):<br>
-            <input type="text" name="request_location"><br>
+            <input type="text" id="request_location"><br>
             XML (xml):<br>
-            <input type="text" name="xml"><br><br>
+            <input type="text" id="xml"><br><br>
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
         <script>
             function hitSubmit() {
-                var request_location = document.getElementsByName("request_location");
-                var xml = document.getElementsByName("xml");
-                var string = "insert into work.items (" +
+                let request_location = document.getElementById("request_location").value;
+                let xml = document.getElementById("xml").value;
+                let query = "use Reporting_developer; insert into work.items (" +
                     "                    name," +
                     "                    requested," +
                     "                    requestor," +
@@ -102,9 +102,7 @@
                     "            ))," +
                     "            @request_location" +
                     "            );";
-                alert("Input Successfully Received");
             }
-            //executeStatement(string)
         </script>
     </body>
 </html>

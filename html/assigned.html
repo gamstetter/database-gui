@@ -38,21 +38,19 @@
         
         <form>
             Item ID (int):<br>
-            <input type="text" name="item_id"><br>
+            <input type="text" id="item_id"><br>
             Assignee (text):<br>
-            <input type="text" name="assignee"><br><br>
+            <input type="text" id="assignee"><br><br>
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
         <script>
             function hitSubmit() {
-                var date = new Date();
-                var item_id = document.getElementsByName("item_id");
-                var assignee = document.getElementsByName("assignee");
-                var string = "insert into work.assignments (item_id, assignee, assigned, assigner) values ('" +
+                let date = new Date();
+                let item_id = document.getElementById("item_id").value;
+                let assignee = document.getElementById("assignee").value;
+                let query = "use Reporting_developer; insert into work.assignments (item_id, assignee, assigned, assigner) values ('" +
                         item_id + "', '" + assignee + "', isnull('" + date + "',sysdatetime()),system_user);";
-                alert("Input Successfully Received");
-                //executeStatement(string);
             }
         </script>
     </body>

@@ -37,7 +37,7 @@
         <h1>Report Request</h1>
 
         <script>
-            var string = "select i.id,i.name,i.requestor,i.department,i.status,isnull(" +
+            let query = "use Reporting_developer; select i.id,i.name,i.requestor,i.department,i.status,isnull(" +
             "(select _d.name" +
             "from work.assignments _a" +
             "            join work.developers _d" +
@@ -96,7 +96,6 @@
             "                i.request_location" +
             "            from work.items i" +
             "            where i.status not in ('Closed','Complete')"
-            //executeStatement(string);
         </script>
     </body>
 </html>
