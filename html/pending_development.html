@@ -36,9 +36,16 @@
         
         <h1>Pending Development</h1>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
+            var socket = io();
             let query = "use Reporting_developer; select id, name, requestor, department, status, request_location " +
             "from work.items i where i.status not in ('Complete','Closed')";
+            socket.emit('process_query', query);
+
+            socket.on('query_status', function(status){
+                console.log('query status: ' + status);
+            })
         </script>
         
     </body>

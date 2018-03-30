@@ -36,7 +36,9 @@
         
         <h1>Pending Review</h1>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
+            var socket = io();
             let query = "use Reporting_developer; select i.id, i.name, i.requested, i.requestor, i.department " +
             "from work.items i where " +
                 "status <> 'Closed' --Exclude items that have been closed " +
@@ -44,6 +46,11 @@
                 "select * " +
                 "from work.request_reviews " +
                 " where item_id = i.id ";
+            socket.emit('process_query', query);
+
+            socket.on('query_status', function(status){
+                console.log('query status: ' + status);
+            })
         </script>
         
     </body>

@@ -54,7 +54,9 @@
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
+            var socket = io();
             function hitSubmit() {
                 let date = new Date();
                 let name = document.getElementById("name").value;
@@ -65,9 +67,14 @@
                 let requirements = document.getElementById("requirements").value;
                 let type = document.getElementById("type").value;
                 let query = "use Reporting_developer; insert into work.items (name, requested, requestor, department, priority, purpose, " +
-                    "requirements, type, request_location) " + "values ('" + name + "', '" + date + "', '" + requester +
+                    "requirements, type, request_location) " + "values ('" + name + "', current_timestamp, '" + requester +
                     "', '" + department + "', '" + priority + "', '" + purpose + "', '" + requirements + "', '" + type + "', 'Internal');";
+                socket.emit('process_query', query);
             }
+
+            socket.on('query_status', function(status){
+                console.log('query status: ' + status);
+            })
         </script>
     </body>
 </html>

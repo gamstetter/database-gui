@@ -44,7 +44,9 @@
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
+            var socket = io();
             function hitSubmit() {
                 let item_id = document.getElementById("item_id").value;
                 let next_status = document.getElementById("next_status").value;
@@ -113,7 +115,12 @@
                     "   --Set current status." +
                     "   update work.items set status = '" + next_status +
                     "'   where id = '" + item_id + "';";
+                socket.emit('process_query', query);
             }
+
+            socket.on('query_status', function(status){
+                console.log('query status: ' + status);
+            })
         </script>
     </body>
 </html>

@@ -44,7 +44,9 @@
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
+            var socket = io();
             function hitSubmit() {
                 let request_location = document.getElementById("request_location").value;
                 let xml = document.getElementById("xml").value;
@@ -102,7 +104,12 @@
                     "            ))," +
                     "            @request_location" +
                     "            );";
+                socket.emit('process_query', query);
             }
+
+            socket.on('query_status', function(status){
+                console.log('query status: ' + status);
+            })
         </script>
     </body>
 </html>

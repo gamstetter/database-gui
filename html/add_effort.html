@@ -46,7 +46,9 @@
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
+            var socket = io();
             function hitSubmit() {
                 let date = new Date();
                 let item_id = document.getElementById("item_id").value;
@@ -54,7 +56,12 @@
                 let developer = document.getElementById("developer").value;
                 let query = "use Reporting_developer; insert into work.level_of_effort (item_id,estimate,added,developer) " +
                     "values ('" + item_id + "', '" + estimate + "', '" + date + "', '" + developer + "');";
+                socket.emit('process_query', query);
             }
+
+            socket.on('query_status', function(status){
+                console.log('query status: ' + status);
+            })
         </script>
     </body>
 </html>

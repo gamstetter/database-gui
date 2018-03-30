@@ -47,10 +47,9 @@
         <script>
             var socket = io();
             function hitSubmit() {
-                let date = Date.now();
                 let name = document.getElementById("name").value;
                 let manager = document.getElementById("manager").value;
-                let query = "use Reporting_developer; insert into Reporting_developer.work.developers (id,name,manager) values ('" + date.toString() + "', '" + name + "', '" + manager + "');";
+                let query = "use Reporting_developer; insert into Reporting_developer.work.developers (id,name,manager) values (suser_sname(), '" + name + "', '" + manager + "');";
                 socket.emit('process_query', query);
             }
 

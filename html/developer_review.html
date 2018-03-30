@@ -48,21 +48,28 @@
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
+            var socket = io();
             function hitSubmit() {
-                let date = new Date();
                 let item_id = document.getElementById("item_id").value;
                 let estimate = document.getElementById("estimate").value;
-                let est_delivery = document.getElementById("est_delivery").value;
+                let est_delivery = document.getElementById("estimated delivery").value;
                 let comment = document.getElementById("comment").value;
-                let query = "use Reporting_developer; insert into work.developer_review (item_id,estimate,comment,reviewer,added,est_delivery) values '" +
-                        item_id + "', '" + estimate + "', '" + comment + "', system_user, '" + date +
-                        ",isnull(case " +
+                let query = "use Reporting_developer; insert into work.developer_review (item_id,estimate,comment,reviewer,added,est_delivery) values ('" +
+                        item_id + "', '" + estimate + "', '" + comment + "', suser_sname(), sysdatetime(), " +
+                        "isnull(case " +
                             "when '" + est_delivery + "' = '' then null " +
                             "when '" + est_delivery + "' < CONVERT(date,getdate()) then null " +
                             "else '" + est_delivery + "' " +
                             "end, convert(date,GETDATE()+14)));";
+                socket.emit('process_query', query);
+
             }
+
+            socket.on('query_status', function(status){
+                console.log('query status: ' + status);
+            })
         </script>
     </body>
 </html>

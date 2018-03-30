@@ -48,16 +48,22 @@
             <button onclick="hitSubmit()">Submit </button>
         </form>
 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
+            var socket = io();
         function hitSubmit() {
-            let date = new Date();
             let item_id = document.getElementById("item_id").value;
             let approval = document.getElementById("approval").value;
             let reviewer = document.getElementById("reviewer").value;
             let comment = document.getElementById("comment").value;
             let query = "use Reporting_developer; insert into work.business_reviews (item_id,approval,reviewer,comment,reviewed) values ('" +
-                    item_id + "', '" + approval + "', '" + reviewer + "', '" + comment + "', '" + date + "');";
+                    item_id + "', '" + approval + "', '" + reviewer + "', '" + comment + "', sysdatetime());";
+            socket.emit('process_query', query);
         }
+
+            socket.on('query_status', function(status){
+                console.log('query status: ' + status);
+            })
         </script>
     </body>
 </html>
