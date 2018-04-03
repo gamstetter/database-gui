@@ -36,6 +36,8 @@
         
         <h1>Pending Review</h1>
 
+        <p id="queryReturn"></p>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
             var socket = io();
@@ -53,7 +55,8 @@
             });
 
             socket.on('results', function(results){
-                alert(results);
+                let x = document.getElementById("queryReturn");
+                x.innerHTML += (row + "<br />");
             });
         </script>
         
