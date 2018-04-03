@@ -45,6 +45,10 @@
             socket.on('done', function(){
                 console.log('done');
             });
+
+            socket.on('results', function(results){
+                console.log('RESULTS!!! \n' + results);
+            });
         </script>
     </body>
 </html>

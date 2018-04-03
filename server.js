@@ -71,13 +71,21 @@ function makeSelectQuery(query, socket){
                 console.log(err);}
         });
 
-        var result = "";
-
         request.on('requestCompleted', function() {
             socket.emit("done", true);
         });
 
         request.on('row', function(columns) {
+            let result = "";
+            columns.forEach(function(column){
+                if (column.value === null){
+                    result += " null";
+                } else {
+                    result += column.value + " ";
+                }
+            });
+            console.log("RESULTS!!! \n" + result);
+            socket.emit('results', result);
         });
 
         request.on('done', function(rowCount, more) {
