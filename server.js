@@ -19,17 +19,15 @@ app.get('/', function(req, res){
 
 io.on('connection', function(socket){
     socket.on('process_query', function(queryString){
-        console.log(queryString);
-        makeConnection(queryString);
+        makeConnection(queryString, socket);
     });
     socket.on('process_select_statement', function(queryString){
-       console.log(queryString);
-       makeSelectQuery(queryString);
+       makeSelectQuery(queryString, socket);
     });
 });
 
 
-function makeConnection(query){
+function makeConnection(query, socket){
     var config = {
         userName: 'root',
         password: 'rootPassword',
@@ -59,7 +57,7 @@ function makeConnection(query){
     });
 }
 
-function makeSelectQuery(query){
+function makeSelectQuery(query, socket){
     var config = {
         userName: 'root',
         password: 'rootPassword',
@@ -72,22 +70,19 @@ function makeSelectQuery(query){
             if (err) {
                 console.log(err);}
         });
+
         var result = "";
+
+        request.on('requestCompleted', function() {
+            socket.emit("done", true);
+        });
+
         request.on('row', function(columns) {
-            columns.forEach(function(column) {
-                if (column.value === null) {
-                    console.log('NULL');
-                } else {
-                    result+= column.value + " ";
-                }
-            });
-            result += "\n";
         });
 
         request.on('done', function(rowCount, more) {
-            console.log(rowCount + ' rows returned');
-            socket.emit('results', result);
         });
+
         connection.execSql(request);
     });
 }
