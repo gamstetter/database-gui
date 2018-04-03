@@ -60,26 +60,35 @@ function makeConnection(query){
 }
 
 function makeSelectQuery(query){
-    request = new Request(query, function(err) {
-        if (err) {
-            console.log(err);}
-    });
-    var result = "";
-    request.on('row', function(columns) {
-        columns.forEach(function(column) {
-            if (column.value === null) {
-                console.log('NULL');
-            } else {
-                result+= column.value + " ";
-            }
-        });
-        result += "\n";
-    });
+    var config = {
+        userName: 'root',
+        password: 'rootPassword',
+        server: 'localhost'
+    };
 
-    request.on('done', function(rowCount, more) {
-        console.log(rowCount + ' rows returned');
-        socket.emit('results', result);
+    var connection = new Connection(config);
+    connection.on('connect', function(err) {
+        request = new Request(query, function(err) {
+            if (err) {
+                console.log(err);}
+        });
+        var result = "";
+        request.on('row', function(columns) {
+            columns.forEach(function(column) {
+                if (column.value === null) {
+                    console.log('NULL');
+                } else {
+                    result+= column.value + " ";
+                }
+            });
+            result += "\n";
+        });
+
+        request.on('done', function(rowCount, more) {
+            console.log(rowCount + ' rows returned');
+            socket.emit('results', result);
+        });
+        connection.execSql(request);
     });
-    connection.execSql(request);
 }
 
