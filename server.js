@@ -49,7 +49,6 @@ function makeConnection(query, socket){
            socket.emit("done", true);
         });
         connection.execSql(request);
-        connection.close();
     });
 }
 
@@ -71,24 +70,22 @@ function makeSelectQuery(query, socket){
             socket.emit("done", true);
         });
 
-        var results = "";
+
         request.on('row', function(columns) {
+            console.log('entered row');
+            let row = "";
             columns.forEach(function(column){
                if (column.value === null){
-                   results += "NULL ";
+                   row += "NULL ";
                } else {
-                   results += column.value + " ";
+                   row += column.value + " ";
                }
             });
-            results += "\n";
-        });
-
-        request.on('done', function(rowCount, more) {
-            socket.emit('results', results);
+            socket.emit('row', row);
+            console.log('finished row');
         });
 
         connection.execSql(request);
-        connection.close();
     });
 }
 

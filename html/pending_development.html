@@ -47,8 +47,8 @@
                 alert('Query Submitted!');
             });
 
-            socket.on('results', function(results){
-                alert(results);
+            socket.on('row', function(row){
+                console.log(row);
             });
         </script>
         

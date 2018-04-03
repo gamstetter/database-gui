@@ -39,15 +39,15 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
             var socket = io();
-            let query = "use Reporting_developer; select i.id,i.name,i.requestor,i.department,i.status,isnull( (select _d.name from work.assignments _a join work.developers _d on _d.id = _a.assignee where item_id = i.id and assigned = (select max(assigned) from work.assignments where item_id = i.id)) ,'' ) [Assignee], case when status = 'Pending Review' then 1 when status = 'Request Reviewed' then 2 when status = 'Assigned' then 3 when status = 'Pending Development' then 4 when status = 'Development' then 5 when status = 'Peer Review' then 6 when status = 'Business Review' then 7 when status = 'Complete' then 8 when status = 'Closed' then 9 end status_ordinal, case when exists ( select * from work.request_reviews where approval = 1 and item_id = i.id ) then 'Yes' else 'No' end [Request Review], case when exists ( select * from work.developer_review where estimate > 0 and item_id = i.id ) then 'Yes' else 'No' end [Developer Review], case when exists ( select * from work.peer_reviews where approval = 1 and item_id = i.id ) then 'Yes' else 'No' end [Peer Review], case when exists ( select * from work.business_reviews where approval = 1 and item_id = i.id ) then 'Yes' else 'No' end [Business Review], isnull(reporting_developer.dbo.TAT(i.requested,null,null,(select min(reviewed) from work.request_reviews where item_id = i.id)),0) [Request Review TAT], i.request_location from work.items i where i.status not in ('Closed','Complete')";
+            // let query = "use Reporting_developer; select i.id,i.name,i.requestor,i.department,i.status,isnull( (select _d.name from work.assignments _a join work.developers _d on _d.id = _a.assignee where item_id = i.id and assigned = (select max(assigned) from work.assignments where item_id = i.id)) ,'' ) [Assignee], case when status = 'Pending Review' then 1 when status = 'Request Reviewed' then 2 when status = 'Assigned' then 3 when status = 'Pending Development' then 4 when status = 'Development' then 5 when status = 'Peer Review' then 6 when status = 'Business Review' then 7 when status = 'Complete' then 8 when status = 'Closed' then 9 end status_ordinal, case when exists ( select * from work.request_reviews where approval = 1 and item_id = i.id ) then 'Yes' else 'No' end [Request Review], case when exists ( select * from work.developer_review where estimate > 0 and item_id = i.id ) then 'Yes' else 'No' end [Developer Review], case when exists ( select * from work.peer_reviews where approval = 1 and item_id = i.id ) then 'Yes' else 'No' end [Peer Review], case when exists ( select * from work.business_reviews where approval = 1 and item_id = i.id ) then 'Yes' else 'No' end [Business Review], isnull(reporting_developer.dbo.TAT(i.requested,null,null,(select min(reviewed) from work.request_reviews where item_id = i.id)),0) [Request Review TAT], i.request_location from work.items i where i.status not in ('Closed','Complete')";
             socket.emit('process_select_statement', query);
 
             socket.on('done', function(){
                 alert('Query Submitted!');
             });
 
-            socket.on('results', function(results){
-                alert(results);
+            socket.on('row', function(row){
+                console.log(row);
             });
         </script>
     </body>
