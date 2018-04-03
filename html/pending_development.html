@@ -36,6 +36,8 @@
         
         <h1>Pending Development</h1>
 
+        <p id="queryReturn"></p>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
             var socket = io();
@@ -43,9 +45,14 @@
             "from work.items i where i.status not in ('Complete','Closed')";
             socket.emit('process_select_statement', query);
 
-            socket.on('results', function(results){
-                alert(results);
-            })
+            socket.on('done', function(){
+                alert('Query Submitted!');
+            });
+
+            socket.on('row', function(row){
+                let x = document.getElementById("queryReturn");
+                x.innerHTML += (row + "<br />");
+            });
         </script>
         
     </body>

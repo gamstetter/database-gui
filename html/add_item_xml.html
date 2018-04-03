@@ -107,9 +107,9 @@
                 socket.emit('process_query', query);
             }
 
-            socket.on('query_status', function(status){
-                console.log('query status: ' + status);
-            })
+            socket.on('done', function(){
+                alert('Query Submitted!');
+            });
         </script>
     </body>
 </html>

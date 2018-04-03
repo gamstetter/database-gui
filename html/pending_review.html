@@ -36,6 +36,8 @@
         
         <h1>Pending Review</h1>
 
+        <p id="queryReturn"></p>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
         <script>
             var socket = io();
@@ -45,12 +47,17 @@
                 "and not exists ( --No request review listed for the work item " +
                 "select * " +
                 "from work.request_reviews " +
-                " where item_id = i.id ";
+                "where item_id = i.id ";
             socket.emit('process_select_statement', query);
 
+            socket.on('done', function(){
+                alert('Query Submitted!');
+            });
+
             socket.on('results', function(results){
-                alert(results);
-            })
+                let x = document.getElementById("queryReturn");
+                x.innerHTML += (row + "<br />");
+            });
         </script>
         
     </body>
