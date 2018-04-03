@@ -43,11 +43,11 @@
             socket.emit('process_select_statement', query);
 
             socket.on('done', function(){
-                console.log('done');
+                alert('Query Submitted!');
             });
 
             socket.on('results', function(results){
-                console.log('RESULTS!!! \n' + results);
+                alert(results);
             });
         </script>
     </body>

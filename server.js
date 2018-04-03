@@ -45,15 +45,11 @@ function makeConnection(query, socket){
             }
         });
 
-        request.on('done', function(rowCount, more) {
-            if (rowCount === 1){
-                socket.emit('query_status', true);
-            } else if (rowCount === 0){
-                socket.emit('query_status', false);
-            }
-            console.log('Query finished');
+        request.on('requestCompleted', function(){
+           socket.emit("done", true);
         });
         connection.execSql(request);
+        connection.close();
     });
 }
 
@@ -75,23 +71,24 @@ function makeSelectQuery(query, socket){
             socket.emit("done", true);
         });
 
+        var results = "";
         request.on('row', function(columns) {
-            let result = "";
             columns.forEach(function(column){
-                if (column.value === null){
-                    result += " null";
-                } else {
-                    result += column.value + " ";
-                }
+               if (column.value === null){
+                   results += "NULL ";
+               } else {
+                   results += column.value + " ";
+               }
             });
-            console.log("RESULTS!!! \n" + result);
-            socket.emit('results', result);
+            results += "\n";
         });
 
         request.on('done', function(rowCount, more) {
+            socket.emit('results', results);
         });
 
         connection.execSql(request);
+        connection.close();
     });
 }
 

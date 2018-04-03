@@ -43,9 +43,13 @@
             "from work.items i where i.status not in ('Complete','Closed')";
             socket.emit('process_select_statement', query);
 
+            socket.on('done', function(){
+                alert('Query Submitted!');
+            });
+
             socket.on('results', function(results){
                 alert(results);
-            })
+            });
         </script>
         
     </body>
