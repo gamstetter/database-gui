@@ -22,6 +22,10 @@ io.on('connection', function(socket){
         console.log(queryString);
         makeConnection(queryString);
     });
+    socket.on('process_select_statement', function(queryString){
+       console.log(queryString);
+       makeSelectQuery(queryString);
+    });
 });
 
 
@@ -53,5 +57,29 @@ function makeConnection(query){
         });
         connection.execSql(request);
     });
+}
+
+function makeSelectQuery(query){
+    request = new Request(query, function(err) {
+        if (err) {
+            console.log(err);}
+    });
+    var result = "";
+    request.on('row', function(columns) {
+        columns.forEach(function(column) {
+            if (column.value === null) {
+                console.log('NULL');
+            } else {
+                result+= column.value + " ";
+            }
+        });
+        result += "\n";
+    });
+
+    request.on('done', function(rowCount, more) {
+        console.log(rowCount + ' rows returned');
+        socket.emit('results', result);
+    });
+    connection.execSql(request);
 }
 

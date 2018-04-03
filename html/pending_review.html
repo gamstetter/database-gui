@@ -46,10 +46,10 @@
                 "select * " +
                 "from work.request_reviews " +
                 " where item_id = i.id ";
-            socket.emit('process_query', query);
+            socket.emit('process_select_statement', query);
 
-            socket.on('query_status', function(status){
-                console.log('query status: ' + status);
+            socket.on('results', function(results){
+                alert(results);
             })
         </script>
         

@@ -98,10 +98,10 @@
             "                i.request_location" +
             "            from work.items i" +
             "            where i.status not in ('Closed','Complete')"
-            socket.emit('process_query', query);
+            socket.emit('process_select_statement', query);
 
-            socket.on('query_status', function(status){
-                console.log('query status: ' + status);
+            socket.on('results', function(results){
+                alert(results);
             })
         </script>
     </body>
